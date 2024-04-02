@@ -47,6 +47,7 @@ void Draw()
 {
     BeginDrawing();
     DrawTextureEx(factoryBG, Vector2{0,0}, 0, 5, WHITE);
+    //juste pour tester les placements
     DrawTextureEx(table, Vector2{ 350,200 }, 0, 3, WHITE);
     DrawTextureEx(block, Vector2{ 350, 104 }, 0, 3, LIME);
 
