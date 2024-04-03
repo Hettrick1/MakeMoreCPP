@@ -48,13 +48,13 @@ void Draw()
     BeginDrawing();
     DrawTextureEx(factoryBG, Vector2{0,0}, 0, 5, WHITE);
     //juste pour tester les placements
-    DrawTextureEx(table, Vector2{ 350,200 }, 0, 3, WHITE);
+    DrawTextureEx(table, Vector2{ 350, 200 }, 0, 3, WHITE);
     DrawTextureEx(block, Vector2{ 350, 104 }, 0, 3, LIME);
 
-    DrawTextureEx(table, Vector2{ 600,200 }, 0, 3, WHITE);
+    DrawTextureEx(table, Vector2{ 600, 200 }, 0, 3, WHITE);
     DrawTextureEx(block, Vector2{ 600, 104 }, 0, 3, BLUE);
 
-    DrawTextureEx(table, Vector2{ 850,200 }, 0, 3, WHITE);
+    DrawTextureEx(table, Vector2{ 850, 200 }, 0, 3, WHITE);
     DrawTextureEx(block, Vector2{ 850, 104 }, 0, 3, BLUE);
 
     DrawTextureEx(table, Vector2{ 350, 350 }, 0, 3, WHITE);
@@ -63,7 +63,7 @@ void Draw()
     DrawTextureEx(table, Vector2{ 350, 500 }, 0, 3, WHITE);
     DrawTextureEx(block, Vector2{ 350, 404 }, 0, 3, BLUE);
 
-    ClearBackground(Color({ 255,255,255,255 }));
+    ClearBackground(Color({ 255, 255, 255, 255 }));
     EndDrawing();
 }
 
