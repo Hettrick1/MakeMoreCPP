@@ -1,14 +1,10 @@
 #include "Menus.h"
 
-Menus::Menus()
-{
-}
-
-Menus::~Menus()
-{
-}
-
 void Menus::Load()
+{
+}
+
+void Menus::Start()
 {
 }
 

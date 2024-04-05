@@ -1,5 +1,5 @@
 #pragma once
-class Menus
+class GameManager
 {
 public:
 	void Load();
