@@ -1,10 +1,13 @@
 #include "raylib.h"
+#include "Menus.h"
 #include <iostream>
 
 const int WIDTH = 1080;
 const int HEIGHT = 720;
 
 Texture2D factoryBG, table, block;
+
+Menus menu;
 
 void Load();
 void Start();
@@ -36,11 +39,12 @@ void Load()
 void Start()
 {
     center_window(WIDTH, HEIGHT);
+    menu.Start();
 }
 
 void Update()
 {
-
+    menu.Update();
 }
 
 void Draw()
@@ -64,6 +68,7 @@ void Draw()
     DrawTextureEx(block, Vector2{ 350, 430 }, 0, 2.5, BLUE);
 
     ClearBackground(Color({ 255, 255, 255, 255 }));
+    menu.Draw();
     EndDrawing();
 }
 
