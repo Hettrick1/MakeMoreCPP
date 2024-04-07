@@ -1,5 +1,7 @@
 #include "Buttons.h"
 
+float timer = 0;
+
 Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener)
 {
 	mPosition = position;
@@ -10,6 +12,7 @@ Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string 
 	mListener = listener;
 	mFontSize = fontSize;
 	mIsHovered = false;
+	mIsClicked = false;
 }
 
 Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener)
@@ -22,6 +25,7 @@ Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color
 	mListener = listener;
 	mFontSize = fontSize;
 	mIsHovered = false;
+	mIsClicked = false;
 }
 
 Buttons::~Buttons()
@@ -46,13 +50,23 @@ void Buttons::Update()
 			mIsHovered = true;
 			mListener.onButtonHovered();
 		}
-		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		if (!mIsClicked && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+			mIsClicked = true;
+			timer = 0;
 			mListener.onClick();
 		}
 	}
 	else if (mIsHovered) {
 		mIsHovered = false;
 		mListener.onButtonUnhovered();
+	}
+	if (mIsClicked) {
+		
+		float deltaTime = GetFrameTime();
+		timer += deltaTime;
+		if (timer > 0.5) {
+			mIsClicked = false;
+		}
 	}
 }
 
@@ -72,4 +86,10 @@ void Buttons::Draw()
 	float textY = mPosition.y + (mSize.y - textHeight) / 2.0f;
 
 	DrawTextEx(GetFontDefault(), mText.c_str(), Vector2{ textX, textY }, mFontSize, 3, mTextColor);
+	if (mIsClicked) {
+		SetColor(RED);
+	}
+	else {
+		SetColor(WHITE);
+	}
 }

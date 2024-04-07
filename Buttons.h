@@ -15,6 +15,7 @@ private:
     ButtonListener mListener;
     int mFontSize;
     bool mIsHovered;
+    bool mIsClicked;
 public:
     Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener);
     Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener);
