@@ -1,7 +1,5 @@
 #include "Buttons.h"
 
-float timer = 0;
-
 Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener)
 {
 	mPosition = position;
@@ -13,6 +11,9 @@ Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string 
 	mFontSize = fontSize;
 	mIsHovered = false;
 	mIsClicked = false;
+	mTimer = 0.5f;
+	mPressedColor = { 128, 128, 128, 255 };
+	mHoveredColor = { 220, 220, 220, 255 };
 }
 
 Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener)
@@ -26,6 +27,9 @@ Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color
 	mFontSize = fontSize;
 	mIsHovered = false;
 	mIsClicked = false;
+	mTimer = 0.5f;
+	mPressedColor = { 128, 128, 128, 255 };
+	mHoveredColor = { 220, 220, 220, 255 };
 }
 
 Buttons::~Buttons()
@@ -37,9 +41,14 @@ void Buttons::SetListener(ButtonListener& listener)
 	mListener = listener;
 }
 
-void Buttons::SetColor(Color color)
-{
+void Buttons::SetButtonColor(Color color){
 	mButtonColor = color;
+}
+void Buttons::SetHoveredColor(Color color) {
+	mHoveredColor = color;
+}
+void Buttons::SetClickedColor(Color color) {
+	mPressedColor = color;
 }
 
 void Buttons::Update()
@@ -48,23 +57,25 @@ void Buttons::Update()
 	if (CheckCollisionPointRec(GetMousePosition(), rect)) {
 		if (!mIsHovered) {
 			mIsHovered = true;
+			SetButtonColor(mHoveredColor);
 			mListener.onButtonHovered();
 		}
-		if (!mIsClicked && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			mIsClicked = true;
-			timer = 0;
+			mTimer = 0.5f;
 			mListener.onClick();
 		}
 	}
 	else if (mIsHovered) {
 		mIsHovered = false;
+		SetButtonColor(mButtonColor);
 		mListener.onButtonUnhovered();
 	}
 	if (mIsClicked) {
 		
 		float deltaTime = GetFrameTime();
-		timer += deltaTime;
-		if (timer > 0.5) {
+		mTimer -= deltaTime;
+		if (mTimer < 0) {
 			mIsClicked = false;
 		}
 	}
@@ -73,6 +84,12 @@ void Buttons::Update()
 void Buttons::Draw()
 {
 	DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, mButtonColor);
+	if (mIsClicked) {
+		Color color = mPressedColor;
+		color.a += 500 * mTimer;
+		color.a = (color.a < 0) ? 0 : color.a;
+		DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
+	}
 	DrawRectangleLines(mPosition.x, mPosition.y, mSize.x, mSize.y, BLACK);
 
 	float textWidth = MeasureTextEx(GetFontDefault(), mText.c_str(), mFontSize, 3).x;
@@ -86,10 +103,5 @@ void Buttons::Draw()
 	float textY = mPosition.y + (mSize.y - textHeight) / 2.0f;
 
 	DrawTextEx(GetFontDefault(), mText.c_str(), Vector2{ textX, textY }, mFontSize, 3, mTextColor);
-	if (mIsClicked) {
-		SetColor(RED);
-	}
-	else {
-		SetColor(WHITE);
-	}
 }
+

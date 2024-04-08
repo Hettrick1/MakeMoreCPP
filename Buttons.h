@@ -16,12 +16,17 @@ private:
     int mFontSize;
     bool mIsHovered;
     bool mIsClicked;
+    float mTimer;
+    Color mPressedColor;
+    Color mHoveredColor;
 public:
     Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener);
     Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize, ButtonListener& listener);
     ~Buttons();
     void SetListener(ButtonListener& listener);
-    void SetColor(Color color);
+    void SetButtonColor(Color color);
+    void SetHoveredColor(Color color);
+    void SetClickedColor(Color color);
     void Update();
     void Draw();
 };
