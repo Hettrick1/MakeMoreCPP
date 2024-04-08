@@ -29,6 +29,7 @@ int main() {
 }
 void Load()
 {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(WIDTH, HEIGHT, "Make More!");
     SetTargetFPS(60);
     factoryBG = LoadTexture("Sprites/MakeMoreBG.png");

@@ -57,7 +57,6 @@ void Buttons::Update()
 	if (CheckCollisionPointRec(GetMousePosition(), rect)) {
 		if (!mIsHovered) {
 			mIsHovered = true;
-			SetButtonColor(mHoveredColor);
 			mListener.onButtonHovered();
 		}
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -68,11 +67,9 @@ void Buttons::Update()
 	}
 	else if (mIsHovered) {
 		mIsHovered = false;
-		SetButtonColor(mButtonColor);
 		mListener.onButtonUnhovered();
 	}
 	if (mIsClicked) {
-		
 		float deltaTime = GetFrameTime();
 		mTimer -= deltaTime;
 		if (mTimer < 0) {
@@ -84,6 +81,14 @@ void Buttons::Update()
 void Buttons::Draw()
 {
 	DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, mButtonColor);
+	if (mIsHovered && !mIsClicked) {
+		Color color = mHoveredColor;
+		DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
+	}
+	else {
+		Color color = BLANK;
+		DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
+	}
 	if (mIsClicked) {
 		Color color = mPressedColor;
 		color.a += 500 * mTimer;
