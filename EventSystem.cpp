@@ -10,12 +10,12 @@ ButtonListener::~ButtonListener()
 
 void ButtonListener::onButtonHovered()
 {
-	SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+
 }
 
 void ButtonListener::onButtonUnhovered()
 {
-	SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+
 }
 
 void ButtonListener::onClick()
