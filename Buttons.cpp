@@ -131,10 +131,8 @@ void Buttons::Update()
 	if (mIsActive && mEnable) {
 		Rectangle rect = { mPosition.x, mPosition.y, mSize.x, mSize.y };
 		if (CheckCollisionPointRec(GetMousePosition(), rect)) {
-			if (!mIsHovered) {
-				mIsHovered = true;
-				SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-			}
+			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+			mIsHovered = true;
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 				mIsClicked = true;
 				mClickBool = true;
@@ -142,8 +140,8 @@ void Buttons::Update()
 			}
 		}
 		else if (mIsHovered) {
-			mIsHovered = false;
 			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			mIsHovered = false;
 		}
 		if (mIsClicked) {
 			float deltaTime = GetFrameTime();
