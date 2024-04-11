@@ -17,6 +17,9 @@ Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string 
 	mPressedColor = { 128, 128, 128, 255 };
 	mHoveredColor = { 220, 220, 220, 255 };
 	mDisableColor = { 220, 220, 220 , 150 };
+	mSeeText = true;
+	mTexture = Texture(); 
+	float mTextureSize = 1;
 }
 
 Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize)
@@ -36,10 +39,40 @@ Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color
 	mPressedColor = { 128, 128, 128, 255 };
 	mHoveredColor = { 220, 220, 220, 255 };
 	mDisableColor = { 55, 55, 55 , 150 };
+	mSeeText = true;
+	mTexture = Texture();
+	float mTextureSize = 1;
+}
+
+Buttons::Buttons(Rectangle rectangle, Color buttonColor, Texture2D& texture, float textureSize)
+{
+	mPosition = Vector2{ rectangle.x, rectangle.y };
+	mSize = Vector2{ rectangle.width, rectangle.height };
+	mButtonColor = buttonColor;
+	mTextColor = WHITE;
+	mText = "";
+	mFontSize = 0;
+	mIsHovered = false;
+	mIsClicked = false;
+	mEnable = true;
+	mIsActive = true;
+	mClickBool = false;
+	mTimer = 0.5f;
+	mPressedColor = { 128, 128, 128, 255 };
+	mHoveredColor = { 220, 220, 220, 255 };
+	mDisableColor = { 55, 55, 55 , 150 };
+	mSeeText = false;
+	mTexture = texture;
+	mTextureSize = textureSize;
 }
 
 Buttons::~Buttons()
 {
+}
+
+void Buttons::SetButtonPosition(Vector2 newPos)
+{
+	mPosition = newPos;
 }
 
 void Buttons::SetButtonColor(Color color){
@@ -71,6 +104,11 @@ void Buttons::SetActive(bool isActive)
 	mIsActive = isActive;
 }
 
+void Buttons::SetSeeText(bool text)
+{
+	mSeeText = text;
+}
+
 bool Buttons::GetClickedBool()
 {
 	return mClickBool;
@@ -79,6 +117,13 @@ bool Buttons::GetClickedBool()
 void Buttons::SetClickedBool(bool click)
 {
 	mClickBool = click;
+}
+
+void Buttons::SetTexture(Texture2D& texture, float size)
+{
+	mSeeText = false;
+	mTextureSize = size;
+	mTexture = texture;
 }
 
 void Buttons::Update()
@@ -132,18 +177,27 @@ void Buttons::Draw()
 			DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
 		}
 		DrawRectangleLines(mPosition.x, mPosition.y, mSize.x, mSize.y, BLACK);
-
-		float textWidth = MeasureTextEx(GetFontDefault(), mText.c_str(), mFontSize, 3).x;
-		float textHeight = MeasureTextEx(GetFontDefault(), mText.c_str(), mFontSize, 3).y;
-
-		if (textWidth > mSize.x) {
-			textWidth = mSize.x;
+		if (!mSeeText) {
+			DrawTextureEx(mTexture, Vector2{ mPosition.x + (mSize.x - mTexture.width) / 2.0f, mPosition.y + (mSize.y - mTexture.height) / 2.0f }, 0, mTextureSize, WHITE);
 		}
+		if (mSeeText) {
+			float textWidth = MeasureTextEx(GetFontDefault(), mText.c_str(), mFontSize, 3).x;
+			float textHeight = MeasureTextEx(GetFontDefault(), mText.c_str(), mFontSize, 3).y;
 
-		float textX = mPosition.x + (mSize.x - textWidth) / 2.0f;
-		float textY = mPosition.y + (mSize.y - textHeight) / 2.0f;
+			if (textWidth > mSize.x) {
+				textWidth = mSize.x;
+			}
 
-		DrawTextEx(GetFontDefault(), mText.c_str(), Vector2{ textX, textY }, mFontSize, 3, mTextColor);
+			float textX = mPosition.x + (mSize.x - textWidth) / 2.0f;
+			float textY = mPosition.y + (mSize.y - textHeight) / 2.0f;
+
+			DrawTextEx(GetFontDefault(), mText.c_str(), Vector2{ textX, textY }, mFontSize, 3, mTextColor);
+		}
 	}
+}
+
+void Buttons::Unload()
+{
+	UnloadTexture(mTexture);
 }
 

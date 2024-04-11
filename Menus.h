@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Buttons.h"
-#include "EventSystem.h"
+#include "Factory.h"
+#include "GameManager.h"
 #include <vector>
 
 class Menus

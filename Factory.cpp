@@ -1,7 +1,9 @@
 #include "Factory.h"
 
-Factory::Factory(int firstLevelUpPrice)
+Factory::Factory(int firstLevelUpPrice, int index)
 {
+	mText = "Factory";
+	mIndex = index;
 	mLevel = 0;
 	mMaxProductOnTables = 0;
 	mLevelUpPrice = firstLevelUpPrice;
@@ -48,6 +50,16 @@ void Factory::LevelUp()
 			mCanLevelUp = false;
 		}
 	}
+}
+
+std::string Factory::GetFactoryName()
+{
+	return mText;
+}
+
+int Factory::GetIndex()
+{
+	return mIndex;
 }
 
 int Factory::GetFactoryLevel()

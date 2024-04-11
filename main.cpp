@@ -32,6 +32,7 @@ void Load()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(WIDTH, HEIGHT, "Make More!");
     SetTargetFPS(60);
+    menu.Load();
     factoryBG = LoadTexture("Sprites/MakeMoreBG.png");
     table = LoadTexture("Sprites/TableSprite.png");
     block = LoadTexture("Sprites/BlockSprite.png");
@@ -78,6 +79,7 @@ void Unload()
     UnloadTexture(factoryBG);
     UnloadTexture(table);
     UnloadTexture(block);
+    menu.Unload();
     CloseWindow();
 }
 

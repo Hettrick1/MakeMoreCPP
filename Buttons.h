@@ -17,23 +17,31 @@ private:
     bool mEnable;
     bool mIsActive;
     bool mClickBool;
+    bool mSeeText;
     float mTimer;
     Color mPressedColor;
     Color mHoveredColor;
     Color mDisableColor;
+    Texture2D mTexture;
+    float mTextureSize;
 public:
     Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string text, Color textColor, int fontSize);
     Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color textColor, int fontSize);
+    Buttons(Rectangle rectangle, Color buttonColor, Texture2D& texture, float textureSize);
     ~Buttons();
+    void SetButtonPosition(Vector2 newPos);
     void SetButtonColor(Color color);
     void SetHoveredColor(Color color);
     void SetClickedColor(Color color);
     void SetDisableColor(Color color);
     void SetEnable(bool enable);
     void SetActive(bool isActive);
+    void SetSeeText(bool text);
     bool GetClickedBool();
     void SetClickedBool(bool click);
+    void SetTexture(Texture2D& texture, float size);
     void Update();
     void Draw();
+    void Unload();
 };
 
