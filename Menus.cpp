@@ -4,6 +4,8 @@ Texture2D factory;
 Texture2D employees;
 Texture2D upgrades;
 Texture2D options;
+Texture2D leftArrow;
+Texture2D rightArrow;
 
 GameManager gm;
 
@@ -17,6 +19,8 @@ void Menus::Load()
 	employees = LoadTexture("Sprites/man-50.png");
 	upgrades = LoadTexture("Sprites/arrow-up-50.png");
 	options = LoadTexture("Sprites/more-50.png");
+	leftArrow = LoadTexture("Sprites/arrow-left-50.png");
+	rightArrow = LoadTexture("Sprites/arrow-right-50.png");
 }
 
 void Menus::Start()
@@ -29,8 +33,8 @@ void Menus::Start()
 		Buttons(Rectangle{310, 650, 310, 70}, ORANGE, employees, 1),
 		Buttons(Rectangle{620, 650, 310, 70}, ORANGE, upgrades, 1),
 		Buttons(Rectangle{930, 650, 150, 70}, ORANGE, options, 1),
-		Buttons(Rectangle{factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40)/2 - 70 - 15, 25, 70, 70}, ORANGE, upgrades, 1),
-		Buttons(Rectangle{factoryTextPos.x + MeasureText(mFactoryName.c_str(), 40)/2 + 15, 25, 70, 70}, ORANGE, options, 1),
+		Buttons(Rectangle{factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40)/2 - 70 - 15, 25, 70, 70}, ORANGE, leftArrow, 1),
+		Buttons(Rectangle{factoryTextPos.x + MeasureText(mFactoryName.c_str(), 40)/2 + 15, 25, 70, 70}, ORANGE, rightArrow, 1),
 	};
 }
 
@@ -53,6 +57,7 @@ void Menus::Draw()
 	{
 		button.Draw();
 	}
+	DrawRectangle(factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40) / 2 - 15, factoryTextPos.y-25, MeasureText(mFactoryName.c_str(), 40) + 30, 50, WHITE);
 	DrawText(mFactoryName.c_str(), factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40) / 2, factoryTextPos.y - 20, 40, BLACK);
 }
 
