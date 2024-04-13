@@ -5,7 +5,7 @@
 const int WIDTH = 1080;
 const int HEIGHT = 720;
 
-Texture2D factoryBG, table, block;
+Texture2D factoryBg;
 
 Menus menu;
 
@@ -32,10 +32,8 @@ void Load()
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(WIDTH, HEIGHT, "Make More!");
     SetTargetFPS(60);
+    factoryBg = LoadTexture("Sprites/MakeMoreBG.png");
     menu.Load();
-    factoryBG = LoadTexture("Sprites/MakeMoreBG.png");
-    table = LoadTexture("Sprites/TableSprite.png");
-    block = LoadTexture("Sprites/BlockSprite.png");
 }
 
 void Start()
@@ -52,23 +50,8 @@ void Update()
 void Draw()
 {
     BeginDrawing();
-    DrawTextureEx(factoryBG, Vector2{0,0}, 0, 5, WHITE);
-    //juste pour tester les placements
-    DrawTextureEx(table, Vector2{ 350, 200 }, 0, 3, WHITE);
-    DrawTextureEx(block, Vector2{ 350, 130 }, 0, 2.5, LIME);
-
-    DrawTextureEx(table, Vector2{ 600, 200 }, 0, 3, WHITE);
-    DrawTextureEx(block, Vector2{ 600, 130 }, 0, 2.5, BLUE);
-
-    DrawTextureEx(table, Vector2{ 850, 200 }, 0, 3, WHITE);
-    DrawTextureEx(block, Vector2{ 850, 130 }, 0, 2.5, BLUE);
-
-    DrawTextureEx(table, Vector2{ 350, 350 }, 0, 3, WHITE);
-    DrawTextureEx(block, Vector2{ 350, 280 }, 0, 2.5, BLUE);
-
-    DrawTextureEx(table, Vector2{ 350, 500 }, 0, 3, WHITE);
-    DrawTextureEx(block, Vector2{ 350, 430 }, 0, 2.5, BLUE);
-
+    DrawTextureEx(factoryBg, Vector2{0,0}, 0, 5, WHITE);
+    
     ClearBackground(Color({ 255, 255, 255, 255 }));
     menu.Draw();
     EndDrawing();
@@ -76,9 +59,7 @@ void Draw()
 
 void Unload()
 {
-    UnloadTexture(factoryBG);
-    UnloadTexture(table);
-    UnloadTexture(block);
+    UnloadTexture(factoryBg);
     menu.Unload();
     CloseWindow();
 }

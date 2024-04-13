@@ -1,7 +1,11 @@
 #pragma once
 
+#include "Table.h"
+#include "raylib.h"
+
 #include <cmath>
 #include <iostream>
+#include <vector>
 
 class Factory
 {
@@ -13,9 +17,10 @@ private:
 	int mLevelUpPrice;
 	int mNbrOfEmployee;
 	bool mCanLevelUp;
+	std::vector<Table> mTables;
 
 public:
-	Factory(int firstLevelUpPrice, int index);
+	Factory(int firstLevelUpPrice, int index, std::string name, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture);
 	~Factory();
 	void Load();
 	void Update();
@@ -29,5 +34,6 @@ public:
 	int GetLevelUpPrice();
 	int GetNbrOfEmployee();
 	bool GetCanLevelUp();
+	Table& GetTable(int index);
 };
 

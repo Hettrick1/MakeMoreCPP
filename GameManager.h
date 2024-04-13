@@ -14,6 +14,8 @@ public:
 	void Update();
 	void Draw();
 	void Unload();
+	int GetFactoryLength();
+	void ChangeFactory(int direction);
 	Factory& GetCurrentFactory();
 };
 

@@ -1,14 +1,25 @@
 #include "Factory.h"
 
-Factory::Factory(int firstLevelUpPrice, int index)
+Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture)
 {
-	mText = "Factory";
+	mText = name;
 	mIndex = index;
 	mLevel = 0;
 	mMaxProductOnTables = 0;
 	mLevelUpPrice = firstLevelUpPrice;
 	mNbrOfEmployee = 0;
 	mCanLevelUp = true;
+	mTables = {
+		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 72 }, { 350, 200 }, { 350, 130 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 72 }, { 600, 200 }, { 600, 130 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 72 }, { 850, 200 }, { 850, 130 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 222 }, { 350, 350 }, { 350, 280 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 222 }, { 600, 350 }, { 600, 280 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 222 }, { 850, 350 }, { 850, 280 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 372 }, { 350, 500 }, { 350, 430 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 372 }, { 600, 500 }, { 600, 430 }),
+		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 372 }, { 850, 500 }, { 850, 430 })
+	};
 }
 
 Factory::~Factory()
@@ -25,6 +36,9 @@ void Factory::Update()
 
 void Factory::Draw()
 {
+	for (Table& table : mTables) {
+		table.Draw();
+	}
 }
 
 void Factory::Unload()
@@ -85,4 +99,9 @@ int Factory::GetNbrOfEmployee()
 bool Factory::GetCanLevelUp()
 {
 	return mCanLevelUp;
+}
+
+Table& Factory::GetTable(int index)
+{
+	return mTables[index];
 }

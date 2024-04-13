@@ -15,6 +15,7 @@ Vector2 factoryTextPos = { 540, 60 };
 
 void Menus::Load()
 {
+	gm.Load();
 	factory = LoadTexture("Sprites/factory-50.png");
 	employees = LoadTexture("Sprites/man-50.png");
 	upgrades = LoadTexture("Sprites/arrow-up-50.png");
@@ -42,17 +43,43 @@ void Menus::Update()
 {
 	mFactoryName = gm.GetCurrentFactory().GetFactoryName();
 	if (factoryIndex != gm.GetCurrentFactory().GetIndex()) {
-		buttons[4].SetButtonPosition(Vector2{ factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40)/2 - 15, factoryTextPos.y });
-		buttons[5].SetButtonPosition(Vector2{ factoryTextPos.x + MeasureText(mFactoryName.c_str(), 40) / 2 + 15, factoryTextPos.y });
+		factoryIndex = gm.GetCurrentFactory().GetIndex();
+		buttons[4].SetButtonPosition(Vector2{ factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40)/2 -70 - 15, 25 });
+		buttons[5].SetButtonPosition(Vector2{ factoryTextPos.x + MeasureText(mFactoryName.c_str(), 40) / 2 + 15, 25 });
+	}
+	if (factoryIndex == 0 && factoryIndex != gm.GetFactoryLength() - 1) {
+		buttons[5].SetActive(true);
+		buttons[4].SetActive(false);
+	}
+	else if (factoryIndex == 0 && factoryIndex == gm.GetFactoryLength() - 1) {
+		buttons[4].SetActive(false);
+		buttons[5].SetActive(false);
+	}
+	else if (factoryIndex != 0 && factoryIndex == gm.GetFactoryLength() - 1) {
+		buttons[4].SetActive(true);
+		buttons[5].SetActive(false);
+	}
+	else {
+		buttons[4].SetActive(true);
+		buttons[5].SetActive(true);
 	}
 	for (Buttons& button : buttons)
 	{
 		button.Update();
 	}
+	if (buttons[4].GetClickedBool()) {
+		buttons[4].SetClickedBool(false);
+		gm.ChangeFactory(-1);
+	}
+	else if (buttons[5].GetClickedBool()) {
+		buttons[5].SetClickedBool(false);
+		gm.ChangeFactory(1);
+	}
 }
 
 void Menus::Draw()
 {
+	gm.Draw();
 	for (Buttons& button : buttons)
 	{
 		button.Draw();
@@ -71,4 +98,5 @@ void Menus::Unload()
 	UnloadTexture(employees);
 	UnloadTexture(upgrades);
 	UnloadTexture(options);
+	gm.Unload();
 }
