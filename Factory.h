@@ -2,6 +2,7 @@
 
 #include "Table.h"
 #include "raylib.h"
+#include "Buttons.h"
 
 #include <cmath>
 #include <iostream>
@@ -18,13 +19,17 @@ private:
 	int mNbrOfEmployee;
 	bool mCanLevelUp;
 	std::vector<Table> mTables;
+	std::vector<Buttons> mBuyEmployeeBtn;
+	std::vector<Buttons> mUpgradeEmployeeBtn;
 
 public:
 	Factory(int firstLevelUpPrice, int index, std::string name, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture);
 	~Factory();
 	void Load();
 	void Update();
+	void UpdateButtons();
 	void Draw();
+	void DrawButtons();
 	void Unload();
 	void LevelUp();
 	std::string GetFactoryName();

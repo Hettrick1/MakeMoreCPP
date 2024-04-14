@@ -6,6 +6,7 @@ class GameManager
 private:
 	int mCurrentFactory;
 	std::vector<Factory> mFactories;
+	bool mIsInUpgrade, mIsInFactory;
 public:
 	GameManager();
 	~GameManager();
@@ -16,6 +17,7 @@ public:
 	void Unload();
 	int GetFactoryLength();
 	void ChangeFactory(int direction);
+	void SetInUpgrade(bool inUpgrade);
 	Factory& GetCurrentFactory();
 };
 

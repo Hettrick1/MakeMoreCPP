@@ -15,6 +15,8 @@ private:
 	float mFabricationProgression;
 	float mTimeTofabric;
 	bool mIsActive;
+	int mUpgradePrice;
+	int mBuyPrice;
 public:
 	Table();
 	Table(int level, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture, Vector2 employeePos, Vector2 tablePos, Vector2 matterPos);
@@ -28,5 +30,6 @@ public:
 	Texture2D GetEmployeeSprite();
 	float GetFabricationProgression();
 	float GetTimeToFabric();
+	int GetUpgradePrice();
 };
 

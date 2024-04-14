@@ -41,6 +41,7 @@ void Menus::Start()
 
 void Menus::Update()
 {
+	gm.Update();
 	mFactoryName = gm.GetCurrentFactory().GetFactoryName();
 	if (factoryIndex != gm.GetCurrentFactory().GetIndex()) {
 		factoryIndex = gm.GetCurrentFactory().GetIndex();
@@ -74,6 +75,14 @@ void Menus::Update()
 	else if (buttons[5].GetClickedBool()) {
 		buttons[5].SetClickedBool(false);
 		gm.ChangeFactory(1);
+	}
+	if (buttons[0].GetClickedBool()) {
+		buttons[0].SetClickedBool(false);
+		gm.SetInUpgrade(false);
+	}
+	if (buttons[1].GetClickedBool()) {
+		buttons[1].SetClickedBool(false);
+		gm.SetInUpgrade(true);
 	}
 }
 
