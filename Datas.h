@@ -1,12 +1,6 @@
 #pragma once
 
-#include "Factory.h"
+extern int money;
 
-#include <vector>
-
-extern std::vector<Factory> allFactories;
-
-void LoadDatas();
-void UnloadDatas();
-Factory& GetFactory(int index);
-
+int GetMoney();
+void AddMoney(int amount);

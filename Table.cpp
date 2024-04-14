@@ -13,8 +13,8 @@ Table::Table()
 	mFabricationProgression = 0;
 	mIsActive = false;
 	mTimeTofabric = 0;
-	mUpgradePrice = 1000000;
-	mBuyPrice = 1000000;
+	mUpgradePrice = 1000;
+	mBuyPrice = 1000;
 }
 
 Table::Table(int level, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture, Vector2 employeePos, Vector2 tablePos, Vector2 matterPos)
@@ -30,7 +30,7 @@ Table::Table(int level, Texture2D employeeTexture, Texture2D tableTexture, Textu
 	mFabricationProgression = 0;
 	mIsActive = false;
 	mTimeTofabric = 5 * level; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
-	mUpgradePrice = 1000000;
+	mUpgradePrice = 1000;
 	mBuyPrice = 1000;
 }
 
@@ -62,12 +62,12 @@ bool Table::GetIsActive()
 	return mIsActive;
 }
 
-int Table::GetLevel()
+int& Table::GetLevel()
 {
 	return mLevel;
 }
 
-int Table::GetProductAmount()
+int& Table::GetProductAmount()
 {
 	return mProductAmount;
 }
@@ -77,17 +77,28 @@ Texture2D Table::GetEmployeeSprite()
 	return mEmployeeTexture;
 }
 
-float Table::GetFabricationProgression()
+float& Table::GetFabricationProgression()
 {
 	return mFabricationProgression;
 }
 
-float Table::GetTimeToFabric()
+float& Table::GetTimeToFabric()
 {
 	return mTimeTofabric;
 }
 
-int Table::GetUpgradePrice()
+int& Table::GetUpgradePrice()
 {
 	return mUpgradePrice;
+}
+
+int& Table::GetBuyPrice()
+{
+	return mBuyPrice;
+}
+
+void Table::LevelUp()
+{
+	mLevel += 1;
+	mUpgradePrice *= 2;
 }

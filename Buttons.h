@@ -40,6 +40,7 @@ public:
     bool GetClickedBool();
     void SetClickedBool(bool click);
     void SetTexture(Texture2D& texture, float size);
+    void SetText(std::string text);
     void Update();
     void Draw();
     void Unload();

@@ -126,6 +126,11 @@ void Buttons::SetTexture(Texture2D& texture, float size)
 	mTexture = texture;
 }
 
+void Buttons::SetText(std::string text)
+{
+	mText = text;
+}
+
 void Buttons::Update()
 {
 	if (mIsActive && mEnable) {

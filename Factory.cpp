@@ -64,14 +64,21 @@ void Factory::UpdateButtons()
 	for (int i = 0; i < mBuyEmployeeBtn.size(); i++) {
 		if (mTables[i].GetIsActive()) {
 			mUpgradeEmployeeBtn[i].Update();
+			mUpgradeEmployeeBtn[i].SetText(TextFormat("%i", mTables[i].GetUpgradePrice()));
 		}
 		else {
 			mBuyEmployeeBtn[i].Update();
 		}
-		if (mBuyEmployeeBtn[i].GetClickedBool()) {
+		if (mBuyEmployeeBtn[i].GetClickedBool() && GetMoney() >= mTables[i].GetBuyPrice()) {
+			mBuyEmployeeBtn[i].SetClickedBool(false);
 			mBuyEmployeeBtn[i].SetActive(false);
 			mUpgradeEmployeeBtn[i].SetActive(true);
 			mTables[i].SetActive(true);
+			AddMoney(-mTables[i].GetBuyPrice());
+		}
+		if (mUpgradeEmployeeBtn[i].GetClickedBool() && GetMoney() >= mTables[i].GetUpgradePrice()) {
+			mUpgradeEmployeeBtn[i].SetClickedBool(false);
+			UpgradeTable(i);
 		}
 	}
 }
@@ -156,4 +163,10 @@ bool Factory::GetCanLevelUp()
 Table& Factory::GetTable(int index)
 {
 	return mTables[index];
+}
+
+void Factory::UpgradeTable(int index)
+{
+	AddMoney(-mTables[index].GetUpgradePrice());
+	mTables[index].LevelUp();
 }

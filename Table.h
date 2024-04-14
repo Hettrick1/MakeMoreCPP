@@ -25,11 +25,13 @@ public:
 	void Draw();
 	void SetActive(bool active);
 	bool GetIsActive();
-	int GetLevel();
-	int GetProductAmount();
+	int& GetLevel();
+	int& GetProductAmount();
 	Texture2D GetEmployeeSprite();
-	float GetFabricationProgression();
-	float GetTimeToFabric();
-	int GetUpgradePrice();
+	float& GetFabricationProgression();
+	float& GetTimeToFabric();
+	int& GetUpgradePrice();
+	int& GetBuyPrice();
+	void LevelUp();
 };
 

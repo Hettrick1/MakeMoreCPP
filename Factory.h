@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Table.h"
+#include "Datas.h"
 #include "raylib.h"
 #include "Buttons.h"
 
@@ -40,5 +41,6 @@ public:
 	int GetNbrOfEmployee();
 	bool GetCanLevelUp();
 	Table& GetTable(int index);
+	void UpgradeTable(int index);
 };
 

@@ -1,18 +1,13 @@
 #include "Datas.h"
 
-std::vector<Factory> allFactories = {};
+extern int money = 10000;
 
-void LoadDatas()
+int GetMoney()
 {
-
+	return money;
 }
 
-void UnloadDatas()
+void AddMoney(int amount)
 {
-
-}
-
-Factory& GetFactory(int index)
-{
-	return allFactories[index];
+	money += amount;
 }
