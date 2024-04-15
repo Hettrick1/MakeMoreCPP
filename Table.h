@@ -1,6 +1,7 @@
 #pragma once
 
 #include "raylib.h"
+#include <iostream>
 class Table
 {
 private:
@@ -14,6 +15,7 @@ private:
 	Vector2 mMatterpos;
 	float mFabricationProgression;
 	float mTimeTofabric;
+	int mMaxProductOnTable;
 	bool mIsActive;
 	int mUpgradePrice;
 	int mBuyPrice;
@@ -33,5 +35,7 @@ public:
 	int& GetUpgradePrice();
 	int& GetBuyPrice();
 	void LevelUp();
+	void SetMaxProductOnTable(int maxProductOnTable);
+	void AddFabricationProgression(int amount);
 };
 

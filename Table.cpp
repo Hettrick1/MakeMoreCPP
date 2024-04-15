@@ -11,6 +11,7 @@ Table::Table()
 	mTablePos = Vector2();
 	mMatterpos = Vector2();
 	mFabricationProgression = 0;
+	mMaxProductOnTable = 0;
 	mIsActive = false;
 	mTimeTofabric = 0;
 	mUpgradePrice = 1000;
@@ -28,8 +29,9 @@ Table::Table(int level, Texture2D employeeTexture, Texture2D tableTexture, Textu
 	mTablePos = tablePos;
 	mMatterpos = matterPos;
 	mFabricationProgression = 0;
+	mMaxProductOnTable = 10;
 	mIsActive = false;
-	mTimeTofabric = 5 * level; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
+	mTimeTofabric = 5; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
 	mUpgradePrice = 1000;
 	mBuyPrice = 1000;
 }
@@ -40,7 +42,16 @@ Table::~Table()
 
 void Table::Update()
 {
-
+	if (mIsActive) {
+		if (mFabricationProgression < 1000 && mProductAmount < mMaxProductOnTable) {
+			mFabricationProgression += mTimeTofabric;
+			std::cout << mFabricationProgression;
+		}
+		else if(mProductAmount < mMaxProductOnTable){
+			mFabricationProgression = 0;
+			mProductAmount += 1;
+		}
+	}
 }
 
 void Table::Draw()
@@ -49,6 +60,7 @@ void Table::Draw()
 		DrawTextureEx(mTableTexture, mTablePos, 0, 3, WHITE);
 		DrawTextureEx(mMatterTexture, mMatterpos, 0, 2.5, WHITE);
 		DrawTextureEx(mEmployeeTexture, mEmployeePos, 0, 4, WHITE);
+		DrawText(TextFormat("%i", mProductAmount), mTablePos.x + 150, mTablePos.y + 10, 30, WHITE);
 	}
 }
 
@@ -101,4 +113,15 @@ void Table::LevelUp()
 {
 	mLevel += 1;
 	mUpgradePrice *= 2;
+	mTimeTofabric = 5 * ((mLevel + 1)/2);
+}
+
+void Table::SetMaxProductOnTable(int maxProductOnTable)
+{
+	mMaxProductOnTable = maxProductOnTable;
+}
+
+void Table::AddFabricationProgression(int amount)
+{
+	mFabricationProgression += amount;
 }

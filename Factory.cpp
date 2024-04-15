@@ -9,6 +9,7 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D e
 	mLevelUpPrice = firstLevelUpPrice;
 	mNbrOfEmployee = 0;
 	mCanLevelUp = true;
+	mClickLevel = 1;
 	mTables = {
 		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 72 }, { 350, 200 }, { 350, 130 }),
 		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 72 }, { 600, 200 }, { 600, 130 }),
@@ -57,6 +58,14 @@ void Factory::Load()
 
 void Factory::Update()
 {
+	for (Table& table : mTables) {
+		table.Update();
+	}
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		for (Table& table : mTables) {
+			table.AddFabricationProgression(mClickLevel*10);
+		}
+	}
 }
 
 void Factory::UpdateButtons()
@@ -122,6 +131,9 @@ void Factory::LevelUp()
 		if (mLevel == 20) {
 			mCanLevelUp = false;
 		}
+	}
+	for (Table& table : mTables) {
+		table.SetMaxProductOnTable(mMaxProductOnTables);
 	}
 }
 

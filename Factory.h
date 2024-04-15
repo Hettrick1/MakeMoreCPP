@@ -18,6 +18,7 @@ private:
 	int mMaxProductOnTables;
 	int mLevelUpPrice;
 	int mNbrOfEmployee;
+	int mClickLevel;
 	bool mCanLevelUp;
 	std::vector<Table> mTables;
 	std::vector<Buttons> mBuyEmployeeBtn;

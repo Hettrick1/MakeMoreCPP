@@ -33,6 +33,11 @@ void GameManager::Update()
 	if (mIsInUpgrade) {
 		mFactories[mCurrentFactory].UpdateButtons();
 	}
+	else {
+		for (Factory& factory : mFactories) {
+			factory.Update();
+		}
+	}
 }
 
 void GameManager::Draw()
