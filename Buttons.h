@@ -10,6 +10,7 @@ private:
     Vector2 mSize;
     Color mButtonColor;
     Color mTextColor;
+    Color mOutlineColor;
     std::string mText;
     int mFontSize;
     bool mIsHovered;
@@ -34,6 +35,7 @@ public:
     void SetHoveredColor(Color color);
     void SetClickedColor(Color color);
     void SetDisableColor(Color color);
+    void SetOutlineColor(Color color);
     void SetEnable(bool enable);
     void SetActive(bool isActive);
     void SetSeeText(bool text);

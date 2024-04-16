@@ -17,6 +17,7 @@ Buttons::Buttons(Vector2 position, Vector2 size, Color buttonColor, std::string 
 	mPressedColor = { 128, 128, 128, 255 };
 	mHoveredColor = { 220, 220, 220, 255 };
 	mDisableColor = { 220, 220, 220 , 150 };
+	mOutlineColor = BLACK;
 	mSeeText = true;
 	mTexture = Texture(); 
 	float mTextureSize = 1;
@@ -39,6 +40,7 @@ Buttons::Buttons(Rectangle rectangle, Color buttonColor, std::string text, Color
 	mPressedColor = { 128, 128, 128, 255 };
 	mHoveredColor = { 220, 220, 220, 255 };
 	mDisableColor = { 55, 55, 55 , 150 };
+	mOutlineColor = BLACK;
 	mSeeText = true;
 	mTexture = Texture();
 	float mTextureSize = 1;
@@ -61,6 +63,7 @@ Buttons::Buttons(Rectangle rectangle, Color buttonColor, Texture2D& texture, flo
 	mPressedColor = { 128, 128, 128, 255 };
 	mHoveredColor = { 220, 220, 220, 255 };
 	mDisableColor = { 55, 55, 55 , 150 };
+	mOutlineColor = BLACK;
 	mSeeText = false;
 	mTexture = texture;
 	mTextureSize = textureSize;
@@ -97,6 +100,11 @@ void Buttons::SetDisableColor(Color color)
 void Buttons::SetEnable(bool enable)
 {
 	mEnable = enable;
+}
+
+void Buttons::SetOutlineColor(Color color)
+{
+	mOutlineColor = color;
 }
 
 void Buttons::SetActive(bool isActive)
@@ -173,13 +181,13 @@ void Buttons::Draw()
 			Color color = BLANK;
 			DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
 		}
-		if (mIsClicked) {
+		if (mIsClicked && mPressedColor.a != 0) {
 			Color color = mPressedColor;
 			color.a += 500 * mTimer;
 			color.a = (color.a < 0) ? 0 : color.a;
 			DrawRectangle(mPosition.x, mPosition.y, mSize.x, mSize.y, color);
 		}
-		DrawRectangleLines(mPosition.x, mPosition.y, mSize.x, mSize.y, BLACK);
+		DrawRectangleLines(mPosition.x, mPosition.y, mSize.x, mSize.y, mOutlineColor);
 		if (!mSeeText) {
 			DrawTextureEx(mTexture, Vector2{ mPosition.x + (mSize.x - mTexture.width) / 2.0f, mPosition.y + (mSize.y - mTexture.height) / 2.0f }, 0, mTextureSize, WHITE);
 		}

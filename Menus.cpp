@@ -89,7 +89,7 @@ void Menus::Update()
 void Menus::Draw()
 {
 	gm.Draw();
-	DrawText(TextFormat("money : %i", GetMoney()), 800, 50, 20, WHITE);
+	DrawText(TextFormat("money : %i", GetMoney()), GetMoneyPos().x, GetMoneyPos().y, 20, WHITE);
 	for (Buttons& button : buttons)
 	{
 		button.Draw();

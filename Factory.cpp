@@ -54,6 +54,9 @@ Factory::~Factory()
 
 void Factory::Load()
 {
+	mBossBtn.SetHoveredColor(BLANK);
+	mBossBtn.SetClickedColor(BLANK);
+	mBossBtn.SetOutlineColor(BLANK);
 }
 
 void Factory::Update()
@@ -97,6 +100,7 @@ void Factory::Draw()
 	for (Table& table : mTables) {
 		table.Draw();
 	}
+	mBossBtn.Draw();
 }
 
 void Factory::DrawButtons()
@@ -181,4 +185,30 @@ void Factory::UpgradeTable(int index)
 {
 	AddMoney(-mTables[index].GetUpgradePrice());
 	mTables[index].LevelUp();
+}
+
+void Factory::ClickOnBoss()
+{
+	if (GetHasSomethingOnTable()) {
+		mBossBtn.Update();
+		if (mBossBtn.GetClickedBool()) {
+			mBossBtn.SetClickedBool(false);
+			for (Table& table : mTables) {
+				if (table.GetProductAmount() > 0) {
+					table.PlayMoneyAnimation();
+				}
+			}
+		}
+	}
+}
+
+bool Factory::GetHasSomethingOnTable()
+{
+	for (Table& table : mTables) {
+		if (table.GetProductAmount() > 0) {
+			return true;
+			break;
+		}
+	}
+	return false;
 }

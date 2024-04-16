@@ -23,6 +23,7 @@ private:
 	std::vector<Table> mTables;
 	std::vector<Buttons> mBuyEmployeeBtn;
 	std::vector<Buttons> mUpgradeEmployeeBtn;
+	Buttons mBossBtn = Buttons(Rectangle{ 40, 185, 250, 350 }, BLANK, "Boss", BLANK, 25);
 
 public:
 	Factory(int firstLevelUpPrice, int index, std::string name, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture);
@@ -43,5 +44,7 @@ public:
 	bool GetCanLevelUp();
 	Table& GetTable(int index);
 	void UpgradeTable(int index);
+	void ClickOnBoss();
+	bool GetHasSomethingOnTable();
 };
 

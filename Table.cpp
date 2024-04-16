@@ -1,5 +1,7 @@
 #include "Table.h"
 
+float timer = 0;
+
 Table::Table()
 {
 	mLevel = 0;
@@ -10,9 +12,12 @@ Table::Table()
 	mEmployeePos = Vector2();
 	mTablePos = Vector2();
 	mMatterpos = Vector2();
+	mMoneyPopUpPos = Vector2();
+	mMoneyPopUpAmount = 0;
 	mFabricationProgression = 0;
 	mMaxProductOnTable = 0;
 	mIsActive = false;
+	mPlayAnim = false;
 	mTimeTofabric = 0;
 	mUpgradePrice = 1000;
 	mBuyPrice = 1000;
@@ -28,9 +33,12 @@ Table::Table(int level, Texture2D employeeTexture, Texture2D tableTexture, Textu
 	mEmployeePos = employeePos;
 	mTablePos = tablePos;
 	mMatterpos = matterPos;
+	mMoneyPopUpPos = tablePos;
+	mMoneyPopUpAmount = 0;
 	mFabricationProgression = 0;
 	mMaxProductOnTable = 10;
 	mIsActive = false;
+	mPlayAnim = false;
 	mTimeTofabric = 5; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
 	mUpgradePrice = 1000;
 	mBuyPrice = 1000;
@@ -45,11 +53,22 @@ void Table::Update()
 	if (mIsActive) {
 		if (mFabricationProgression < 1000 && mProductAmount < mMaxProductOnTable) {
 			mFabricationProgression += mTimeTofabric;
-			std::cout << mFabricationProgression;
 		}
 		else if(mProductAmount < mMaxProductOnTable){
 			mFabricationProgression = 0;
 			mProductAmount += 1;
+		}
+		if (mPlayAnim) {
+			timer += GetFrameTime();
+			int directionX = GetMoneyPos().x + 30 - mMoneyPopUpPos.x;
+			int directionY = GetMoneyPos().y - 5 - mMoneyPopUpPos.y;
+			if (directionX != 0 && directionY != 0) {
+				mMoneyPopUpPos.x += directionX * GetFrameTime();
+				mMoneyPopUpPos.y += directionY * GetFrameTime();
+			}
+			if(timer > 30){
+				mPlayAnim = false;
+			}
 		}
 	}
 }
@@ -61,6 +80,9 @@ void Table::Draw()
 		DrawTextureEx(mMatterTexture, mMatterpos, 0, 2.5, WHITE);
 		DrawTextureEx(mEmployeeTexture, mEmployeePos, 0, 4, WHITE);
 		DrawText(TextFormat("%i", mProductAmount), mTablePos.x + 150, mTablePos.y + 10, 30, WHITE);
+		if (mPlayAnim) {
+			DrawText(TextFormat("%i", mMoneyPopUpAmount), mMoneyPopUpPos.x, mMoneyPopUpPos.y, 30, YELLOW);
+		}
 	}
 }
 
@@ -124,4 +146,14 @@ void Table::SetMaxProductOnTable(int maxProductOnTable)
 void Table::AddFabricationProgression(int amount)
 {
 	mFabricationProgression += amount;
+}
+
+void Table::PlayMoneyAnimation()
+{
+	timer = 0;
+	mMoneyPopUpPos = mTablePos;
+	mMoneyPopUpAmount = 100 * mProductAmount;
+	AddMoney(mMoneyPopUpAmount);
+	mProductAmount = 0;
+	mPlayAnim = true;
 }

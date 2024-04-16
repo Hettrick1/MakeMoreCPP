@@ -26,6 +26,9 @@ void GameManager::Load()
 void GameManager::Start()
 {
 	mFactories = { Factory(1000, 0, "Factory1", employee, table, block), Factory(2000, 1, "kjlghdiluhaslisaug", employee, table, block)};
+	for (Factory& factory : mFactories) {
+		factory.Load();
+	}
 }
 
 void GameManager::Update()
@@ -37,6 +40,7 @@ void GameManager::Update()
 		for (Factory& factory : mFactories) {
 			factory.Update();
 		}
+		mFactories[mCurrentFactory].ClickOnBoss();
 	}
 }
 
@@ -84,3 +88,4 @@ void GameManager::SetInUpgrade(bool inUpgrade)
 		mIsInUpgrade = false;
 	}
 }
+
