@@ -48,7 +48,7 @@ Table::Table(int level, Texture2D& employeeTexture, Texture2D& tableTexture, Tex
 	mIsActive = false;
 	mPlayMoneyAnim = false;
 	mPlayHandAnim = true;
-	mTimeTofabric = 5; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
+	mTimeTofabric = 5 * 0.25f; //time to fabric c'est une incrémentation pour atteindre le montant qu'il faut dans le produit
 	mUpgradePrice = 1000;
 	mBuyPrice = 1000;
 	mMinDest = mHandPos.x - 20;
