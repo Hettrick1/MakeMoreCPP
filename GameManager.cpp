@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-Texture2D employee, table, block;
+Texture2D employee, table, block, hand;
 
 
 
@@ -21,11 +21,12 @@ void GameManager::Load()
 	employee = LoadTexture("Sprites/EmployeeSprite1.png");
 	table = LoadTexture("Sprites/TableSprite.png");
 	block = LoadTexture("Sprites/BlockSprite.png");
+	hand = LoadTexture("Sprites/EmployeeHandSprite.png");
 }
 
 void GameManager::Start()
 {
-	mFactories = { Factory(1000, 0, "Factory1", employee, table, block), Factory(2000, 1, "kjlghdiluhaslisaug", employee, table, block)};
+	mFactories = { Factory(1000, 0, "Factory1", employee, table, block, hand), Factory(2000, 1, "kjlghdiluhaslisaug", employee, table, block, hand)};
 	for (Factory& factory : mFactories) {
 		factory.Load();
 	}
@@ -59,6 +60,7 @@ void GameManager::Unload()
 	UnloadTexture(employee);
 	UnloadTexture(table);
 	UnloadTexture(block);
+	UnloadTexture(hand);
 }
 
 int GameManager::GetFactoryLength()

@@ -1,6 +1,6 @@
 #include "Factory.h"
 
-Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D employeeTexture, Texture2D tableTexture, Texture2D matterTexture)
+Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& employeeTexture, Texture2D& tableTexture, Texture2D& matterTexture, Texture2D& handTexture)
 {
 	mText = name;
 	mIndex = index;
@@ -11,15 +11,15 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D e
 	mCanLevelUp = true;
 	mClickLevel = 1;
 	mTables = {
-		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 72 }, { 350, 200 }, { 350, 130 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 72 }, { 600, 200 }, { 600, 130 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 72 }, { 850, 200 }, { 850, 130 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 222 }, { 350, 350 }, { 350, 280 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 222 }, { 600, 350 }, { 600, 280 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 222 }, { 850, 350 }, { 850, 280 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 320, 372 }, { 350, 500 }, { 350, 430 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 570, 372 }, { 600, 500 }, { 600, 430 }),
-		Table(1, employeeTexture, tableTexture, matterTexture, { 820, 372 }, { 850, 500 }, { 850, 430 })
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 320, 72 }, { 350, 200 }, { 350, 130 }, {320, 80}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 570, 72 }, { 600, 200 }, { 600, 130 }, {570, 80}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 820, 72 }, { 850, 200 }, { 850, 130 }, {820, 80}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 320, 222 }, { 350, 350 }, { 350, 280 }, {320, 230}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 570, 222 }, { 600, 350 }, { 600, 280 }, {570, 230}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 820, 222 }, { 850, 350 }, { 850, 280 }, {820, 230}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 320, 372 }, { 350, 500 }, { 350, 430 }, {320, 380}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 570, 372 }, { 600, 500 }, { 600, 430 }, {570, 380}),
+		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, { 820, 372 }, { 850, 500 }, { 850, 430 }, {820, 380})
 	};
 	mBuyEmployeeBtn = {
 		Buttons(Rectangle{ 423, 170, 50, 50}, ORANGE, "+" , WHITE, 60),
