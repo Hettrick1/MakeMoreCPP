@@ -92,6 +92,7 @@ void Factory::UpdateButtons()
 			mUpgradeEmployeeBtn[i].SetClickedBool(false);
 			UpgradeTable(i);
 		}
+		mUpgradeEmployeeBtn[i].SetClickedBool(false);
 	}
 }
 
