@@ -126,6 +126,10 @@ void Buttons::SetClickedBool(bool click)
 {
 	mClickBool = click;
 }
+void Buttons::SetHoveredBool(bool hover)
+{
+	mIsHovered = hover;
+}
 
 void Buttons::SetTexture(Texture2D& texture, float size)
 {

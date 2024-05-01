@@ -1,5 +1,7 @@
 #include "Factory.h"
 
+bool isPlayingHandAnim;
+
 Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& employeeTexture, Texture2D& tableTexture, Texture2D& matterTexture, Texture2D& handTexture, Texture2D& employeeTexture2, Texture2D& handTexture2)
 {
 	mText = name;
@@ -46,6 +48,12 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& 
 	for (Buttons& upgradeButton : mUpgradeEmployeeBtn) {
 		upgradeButton.SetActive(false);
 	}
+	mBossTexture1 = LoadTexture("Sprites/BossSprite1.png");
+	mBossTexture2 = LoadTexture("Sprites/BossSprite2.png");
+	mBossHandTexture = LoadTexture("Sprites/BossHandSprite.png");
+	mCurrentBossTexture = mBossTexture1;
+	mHandPos = { 40, 200 };
+	mHandSpeed = 80;
 }
 
 Factory::~Factory()
@@ -65,9 +73,17 @@ void Factory::Update()
 	for (Table& table : mTables) {
 		table.Update();
 	}
+	AnimBossHand();
 	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		for (Table& table : mTables) {
-			table.AddFabricationProgression(mClickLevel*10);
+			if (table.GetIsActive()) {
+				table.AddFabricationProgression(mClickLevel * 10);
+			}
+		}
+		if (!isPlayingHandAnim) {
+			isPlayingHandAnim = true;
+			mHandSpeed = 80;
+			mHandPos = { 40, 200 };
 		}
 	}
 }
@@ -108,6 +124,8 @@ void Factory::Draw()
 	for (Table& table : mTables) {
 		table.Draw();
 	}
+	DrawTextureEx(mCurrentBossTexture, {40, 200}, 0, 4, WHITE);
+	DrawTextureEx(mBossHandTexture, mHandPos, 0, 4, WHITE);
 	mBossBtn.Draw();
 }
 
@@ -124,6 +142,9 @@ void Factory::DrawButtons()
 
 void Factory::Unload()
 {
+	UnloadTexture(mBossHandTexture);
+	UnloadTexture(mBossTexture1);
+	UnloadTexture(mBossTexture2);
 }
 
 void Factory::LevelUp()
@@ -204,9 +225,12 @@ void Factory::ClickOnBoss()
 		mBossBtn.Update();
 		if (mBossBtn.GetClickedBool()) {
 			mBossBtn.SetClickedBool(false);
+			mCurrentBossTexture = mBossTexture2;
 			for (Table& table : mTables) {
 				if (table.GetProductAmount() > 0) {
 					table.PlayMoneyAnimation();
+					mBossBtn.SetHoveredBool(false);
+					SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 				}
 			}
 		}
@@ -222,4 +246,17 @@ bool Factory::GetHasSomethingOnTable()
 		}
 	}
 	return false;
+}
+
+void Factory::AnimBossHand()
+{
+	if (isPlayingHandAnim) {
+		mHandPos.y += mHandSpeed * GetFrameTime();
+		if (mHandPos.y > 210) {
+			mHandSpeed *= -1;
+		}
+		if (mHandPos.y < 200) {
+			isPlayingHandAnim = false;
+		}
+	}
 }
