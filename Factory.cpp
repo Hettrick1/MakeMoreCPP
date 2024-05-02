@@ -53,7 +53,7 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& 
 	mBossHandTexture = LoadTexture("Sprites/BossHandSprite.png");
 	mCurrentBossTexture = mBossTexture1;
 	mHandPos = { 40, 200 };
-	mHandSpeed = 80;
+	mHandSpeed = 120;
 }
 
 Factory::~Factory()
@@ -82,7 +82,7 @@ void Factory::Update()
 		}
 		if (!isPlayingHandAnim) {
 			isPlayingHandAnim = true;
-			mHandSpeed = 80;
+			mHandSpeed = 120;
 			mHandPos = { 40, 200 };
 		}
 	}
