@@ -1,5 +1,6 @@
 #include "Factory.h"
 
+float timer = 0;
 bool isPlayingHandAnim;
 
 Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& employeeTexture, Texture2D& tableTexture, Texture2D& matterTexture, Texture2D& handTexture, Texture2D& employeeTexture2, Texture2D& handTexture2)
@@ -7,7 +8,7 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& 
 	mText = name;
 	mIndex = index;
 	mLevel = 0;
-	mMaxProductOnTables = 0;
+	mMaxProductOnTables = 10;
 	mLevelUpPrice = firstLevelUpPrice;
 	mNbrOfEmployee = 0;
 	mCanLevelUp = true;
@@ -221,10 +222,12 @@ void Factory::UpgradeTable(int index)
 
 void Factory::ClickOnBoss()
 {
+	timer += GetFrameTime();
 	if (GetHasSomethingOnTable()) {
 		mBossBtn.Update();
 		if (mBossBtn.GetClickedBool()) {
 			mBossBtn.SetClickedBool(false);
+			timer = 0;
 			mCurrentBossTexture = mBossTexture2;
 			for (Table& table : mTables) {
 				if (table.GetProductAmount() > 0) {
@@ -234,6 +237,9 @@ void Factory::ClickOnBoss()
 				}
 			}
 		}
+	}
+	if (timer > 2) {
+		mCurrentBossTexture = mBossTexture1;
 	}
 }
 

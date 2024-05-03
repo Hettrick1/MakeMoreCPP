@@ -15,7 +15,7 @@ private:
 	std::string mText;
 	int mIndex;
 	int mLevel;
-	int mMaxProductOnTables = 10;
+	int mMaxProductOnTables;
 	int mLevelUpPrice;
 	int mNbrOfEmployee;
 	int mClickLevel;
@@ -24,7 +24,7 @@ private:
 	std::vector<Buttons> mBuyEmployeeBtn;
 	std::vector<Buttons> mUpgradeEmployeeBtn;
 	Buttons mBossBtn = Buttons(Rectangle{ 40, 185, 250, 350 }, BLANK, "Boss", BLANK, 25);
-	Buttons mFactoryUpgradeBtn = Buttons(Rectangle{ 80, 320, 150, 50 }, ORANGE, "", WHITE, 25);
+	Buttons mFactoryUpgradeBtn = Buttons(Rectangle{ 93, 320, 150, 50 }, ORANGE, "", WHITE, 25);
 	Texture2D mBossTexture1, mBossTexture2, mBossHandTexture, mCurrentBossTexture;
 	Vector2 mHandPos;
 	float mHandSpeed;
