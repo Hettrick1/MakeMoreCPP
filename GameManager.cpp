@@ -78,6 +78,7 @@ int GameManager::GetFactoryLength()
 void GameManager::ChangeFactory(int direction)
 {
 	mCurrentFactory += direction;
+	mFactories[mCurrentFactory].ClearPopUpVector();
 }
 
 Factory& GameManager::GetCurrentFactory()

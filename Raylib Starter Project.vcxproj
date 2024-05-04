@@ -151,6 +151,7 @@
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Menus.h" />
+    <ClInclude Include="PopUpText.h" />
     <ClInclude Include="Product.h" />
     <ClInclude Include="Table.h" />
   </ItemGroup>

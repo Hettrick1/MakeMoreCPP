@@ -52,9 +52,13 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& 
 	mBossTexture1 = LoadTexture("Sprites/BossSprite1.png");
 	mBossTexture2 = LoadTexture("Sprites/BossSprite2.png");
 	mBossHandTexture = LoadTexture("Sprites/BossHandSprite.png");
+	mHandFxTexture = LoadTexture("Sprites/handFxSprite.png");
 	mCurrentBossTexture = mBossTexture1;
 	mHandPos = { 40, 200 };
+	mPopUpPos = { 90, 310 };
 	mHandSpeed = 120;
+	mHandFxSize = 4;
+	mHandFxColor = BLANK;
 }
 
 Factory::~Factory()
@@ -85,6 +89,23 @@ void Factory::Update()
 			isPlayingHandAnim = true;
 			mHandSpeed = 120;
 			mHandPos = { 40, 200 };
+		}
+		PopUp newPopUp;
+
+		newPopUp.position = PopUpRandomSpawn();
+		newPopUp.speedY = 100.0f;
+		newPopUp.speedX = (float)(GetRandomValue(-20, 20) * 2.0);
+		newPopUp.text = TextFormat("%i", mClickLevel);
+		newPopUp.time = 0.0f;
+		newPopUp.alpha = 255;
+		mPopUpText.push_back(newPopUp);
+	}
+	for (PopUp& popUp : mPopUpText) {
+		popUp.time += GetFrameTime();
+		popUp.position.x += popUp.speedX * GetFrameTime();
+		popUp.position.y -= popUp.speedY * GetFrameTime();
+		if (popUp.time > 1.2) {
+			mPopUpText.erase(begin(mPopUpText));
 		}
 	}
 }
@@ -126,8 +147,13 @@ void Factory::Draw()
 		table.Draw();
 	}
 	DrawTextureEx(mCurrentBossTexture, {40, 200}, 0, 4, WHITE);
+	DrawTextureEx(mHandFxTexture, { mHandPos.x, mHandPos.y - 10 }, 0, mHandFxSize, mHandFxColor);
+	DrawTextureEx(mHandFxTexture, { mHandPos.x + 136, mHandPos.y - 10}, 0, mHandFxSize, mHandFxColor);
 	DrawTextureEx(mBossHandTexture, mHandPos, 0, 4, WHITE);
 	mBossBtn.Draw();
+	for (PopUp& popUp : mPopUpText) {
+		DrawText(popUp.text.c_str(), popUp.position.x, popUp.position.y, 20, WHITE);
+	}
 }
 
 void Factory::DrawButtons()
@@ -146,6 +172,8 @@ void Factory::Unload()
 	UnloadTexture(mBossHandTexture);
 	UnloadTexture(mBossTexture1);
 	UnloadTexture(mBossTexture2);
+	UnloadTexture(mCurrentBossTexture);
+	UnloadTexture(mHandFxTexture);
 }
 
 void Factory::LevelUp()
@@ -260,9 +288,30 @@ void Factory::AnimBossHand()
 		mHandPos.y += mHandSpeed * GetFrameTime();
 		if (mHandPos.y > 210) {
 			mHandSpeed *= -1;
+			mHandFxColor = WHITE;
+		}
+		if (mHandPos.y < 205) {
+			mHandFxColor = BLANK;
 		}
 		if (mHandPos.y < 200) {
 			isPlayingHandAnim = false;
 		}
 	}
+}
+
+Vector2 Factory::PopUpRandomSpawn()
+{
+	int left = GetRandomValue(0, 1);
+
+	if (left == 0) {
+		return { mPopUpPos.x + (float)GetRandomValue(-10, 10), mPopUpPos.y + 20 };
+	}
+	else {
+		return { mPopUpPos.x + 136 + (float)GetRandomValue(-10, 10), mPopUpPos.y + 20 };
+	}
+}
+
+void Factory::ClearPopUpVector()
+{
+	mPopUpText.clear();
 }
