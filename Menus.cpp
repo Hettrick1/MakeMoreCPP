@@ -13,6 +13,8 @@ int factoryIndex;
 std::string mFactoryName;
 Vector2 factoryTextPos = { 540, 60 };
 
+bool isInUpgradePanel = false;
+
 void Menus::Load()
 {
 	gm.Load();
@@ -36,6 +38,10 @@ void Menus::Start()
 		Buttons(Rectangle{930, 650, 150, 70}, ORANGE, options, 1),
 		Buttons(Rectangle{factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40)/2 - 70 - 15, 25, 70, 70}, ORANGE, leftArrow, 1),
 		Buttons(Rectangle{factoryTextPos.x + MeasureText(mFactoryName.c_str(), 40)/2 + 15, 25, 70, 70}, ORANGE, rightArrow, 1),
+	};
+	upgradeFactoryButtons = {
+		Buttons(Rectangle{620, 580, 310, 70}, ORANGE, TextFormat("Click multiplier : %i", gm.GetCurrentFactory().GetClickUpgradePrice()), WHITE, 20),
+		Buttons(Rectangle{620, 510, 310, 70}, ORANGE, TextFormat("New Factory : %i", gm.GetNewFactoryPrice()), WHITE, 20),
 	};
 }
 
@@ -79,10 +85,52 @@ void Menus::Update()
 	if (buttons[0].GetClickedBool()) {
 		buttons[0].SetClickedBool(false);
 		gm.SetInUpgrade(false);
+		isInUpgradePanel = false;
 	}
 	if (buttons[1].GetClickedBool()) {
 		buttons[1].SetClickedBool(false);
 		gm.SetInUpgrade(true);
+		isInUpgradePanel = false;
+	}
+	if (buttons[2].GetClickedBool()) {
+		buttons[2].SetClickedBool(false);
+		gm.SetInUpgrade(false);
+		isInUpgradePanel = !isInUpgradePanel;
+	}
+	if (isInUpgradePanel) {
+		if (GetMoney() < gm.GetCurrentFactory().GetClickUpgradePrice()) {
+			upgradeFactoryButtons[0].SetClickedColor(BLANK);
+			upgradeFactoryButtons[0].SetHoveredBool(false);
+			upgradeFactoryButtons[0].SetEnable(false);
+		}
+		else {
+			upgradeFactoryButtons[0].SetClickedColor({ 128, 128, 128, 255 });
+			upgradeFactoryButtons[0].SetEnable(true);
+		}
+		if (GetMoney() < gm.GetNewFactoryPrice()) {
+			upgradeFactoryButtons[1].SetClickedColor(BLANK);
+			upgradeFactoryButtons[1].SetHoveredBool(false);
+			upgradeFactoryButtons[1].SetEnable(false);
+		}
+		else {
+			upgradeFactoryButtons[1].SetClickedColor({ 128, 128, 128, 255 });
+			upgradeFactoryButtons[1].SetEnable(true);
+		}
+		for (Buttons& button : upgradeFactoryButtons) {
+			button.Update();
+		}
+		if (upgradeFactoryButtons[0].GetClickedBool()) {
+			upgradeFactoryButtons[0].SetClickedBool(false);
+			gm.GetCurrentFactory().UpgradeClick();
+			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			upgradeFactoryButtons[0].SetText(TextFormat("Click multiplier : %i", gm.GetCurrentFactory().GetClickUpgradePrice()));
+		}
+		if (upgradeFactoryButtons[1].GetClickedBool()) {
+			upgradeFactoryButtons[1].SetClickedBool(false);
+			gm.CreateNewFactory();
+			SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+			upgradeFactoryButtons[1].SetText(TextFormat("New Factory : %i", gm.GetNewFactoryPrice()));
+		}
 	}
 }
 
@@ -96,6 +144,11 @@ void Menus::Draw()
 	}
 	DrawRectangle(factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40) / 2 - 15, factoryTextPos.y-25, MeasureText(mFactoryName.c_str(), 40) + 30, 50, WHITE);
 	DrawText(mFactoryName.c_str(), factoryTextPos.x - MeasureText(mFactoryName.c_str(), 40) / 2, factoryTextPos.y - 20, 40, BLACK);
+	if (isInUpgradePanel) {
+		for (Buttons& button : upgradeFactoryButtons) {
+			button.Draw();
+		}
+	}
 }
 
 void Menus::Unload()

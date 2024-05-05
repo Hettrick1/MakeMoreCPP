@@ -7,6 +7,8 @@ private:
 	int mCurrentFactory;
 	std::vector<Factory> mFactories;
 	bool mIsInUpgrade, mIsInFactory;
+	int mNewFactoryPrice;
+	int mIndex;
 public:
 	GameManager();
 	~GameManager();
@@ -19,5 +21,7 @@ public:
 	void ChangeFactory(int direction);
 	void SetInUpgrade(bool inUpgrade);
 	Factory& GetCurrentFactory();
+	int GetNewFactoryPrice();
+	void CreateNewFactory();
 };
 

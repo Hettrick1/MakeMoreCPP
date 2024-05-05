@@ -13,6 +13,7 @@ Factory::Factory(int firstLevelUpPrice, int index, std::string name, Texture2D& 
 	mNbrOfEmployee = 0;
 	mCanLevelUp = true;
 	mClickLevel = 1;
+	mClickMultiplierCost = 10000;
 	mTables = {
 		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, employeeTexture2, handTexture2, { 320, 72 }, { 350, 200 }, { 350, 130 }, { 320, 80 }),
 		Table(1, employeeTexture, tableTexture, matterTexture, handTexture, employeeTexture2, handTexture2, { 570, 72 }, { 600, 200 }, { 600, 130 }, { 570, 80 }),
@@ -317,4 +318,21 @@ Vector2 Factory::PopUpRandomSpawn()
 void Factory::ClearPopUpVector()
 {
 	mPopUpText.clear();
+}
+
+int Factory::GetClickLevel()
+{
+	return mClickLevel;
+}
+
+int Factory::GetClickUpgradePrice()
+{
+	return mClickMultiplierCost;
+}
+
+void Factory::UpgradeClick()
+{
+	AddMoney(-mClickMultiplierCost);
+	mClickLevel += 1;
+	mClickMultiplierCost *= 2;
 }

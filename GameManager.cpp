@@ -10,6 +10,8 @@ GameManager::GameManager()
 	mFactories = {};
 	mIsInFactory = true;
 	mIsInUpgrade = false;
+	mNewFactoryPrice = 50000;
+	mIndex = 1;
 }
 
 GameManager::~GameManager()
@@ -29,7 +31,7 @@ void GameManager::Load()
 
 void GameManager::Start()
 {
-	mFactories = { Factory(1000, 0, "Factory1", employee, table, block, hand, employeeFabFinished, hand2), Factory(2000, 1, "wilKGB", employee, table, block, hand, employeeFabFinished, hand2)};
+	mFactories = { Factory(1000, 0, "Factory 1", employee, table, block, hand, employeeFabFinished, hand2)};
 	for (Factory& factory : mFactories) {
 		factory.Load();
 	}
@@ -100,5 +102,20 @@ void GameManager::SetInUpgrade(bool inUpgrade)
 		mIsInFactory = true;
 		mIsInUpgrade = false;
 	}
+}
+
+int GameManager::GetNewFactoryPrice()
+{
+	return mNewFactoryPrice;
+}
+
+void GameManager::CreateNewFactory()
+{
+	AddMoney(-mNewFactoryPrice);
+	mNewFactoryPrice *= 2;
+	Factory newFactory = Factory(3000, mIndex, TextFormat("Factory %i", mIndex + 1), employee, table, block, hand, employeeFabFinished, hand2);
+	newFactory.Load();
+	mFactories.push_back(newFactory);
+	mIndex += 1;
 }
 

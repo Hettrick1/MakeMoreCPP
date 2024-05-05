@@ -20,6 +20,7 @@ private:
 	int mLevelUpPrice;
 	int mNbrOfEmployee;
 	int mClickLevel;
+	int mClickMultiplierCost;
 	bool mCanLevelUp;
 	std::vector<Table> mTables;
 	std::vector<Buttons> mBuyEmployeeBtn;
@@ -57,5 +58,8 @@ public:
 	void AnimBossHand();
 	Vector2 PopUpRandomSpawn();
 	void ClearPopUpVector();
+	int GetClickLevel();
+	int GetClickUpgradePrice();
+	void UpgradeClick();
 };
 

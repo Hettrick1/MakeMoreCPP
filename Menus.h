@@ -9,6 +9,7 @@ class Menus
 {
 private:
 	std::vector<Buttons> buttons;
+	std::vector<Buttons> upgradeFactoryButtons;
 public:
 	void Load();
 	void Start();
