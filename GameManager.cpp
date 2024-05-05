@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-Texture2D employee, table, block, hand, employeeFabFinished, hand2;
+Texture2D employee, table, block, hand, employeeFabFinished, hand2, bossTableTexture;
 
 
 
@@ -24,6 +24,7 @@ void GameManager::Load()
 	block = LoadTexture("Sprites/BlockSprite.png");
 	hand = LoadTexture("Sprites/EmployeeHandSprite.png");
 	hand2 = LoadTexture("Sprites/HandSprite.png");
+	bossTableTexture = LoadTexture("Sprites/BossTableSprite.png");
 }
 
 void GameManager::Start()
@@ -51,7 +52,8 @@ void GameManager::Draw()
 {
 	mFactories[mCurrentFactory].Draw();
 	if (mIsInUpgrade) {
-		DrawRectangle(0, 0, 1080, 720, Color{ 0, 0, 0, 100 });
+		DrawRectangle(0, 0, 1080, 720, Color{ 0, 0, 0, 150 });
+		DrawTextureEx(bossTableTexture, { 40, 200 }, 0, 4, WHITE);
 		mFactories[mCurrentFactory].DrawButtons();
 	}
 
@@ -65,6 +67,7 @@ void GameManager::Unload()
 	UnloadTexture(hand);
 	UnloadTexture(employeeFabFinished);
 	UnloadTexture(hand2);
+	UnloadTexture(bossTableTexture);
 	for (Factory& factory : mFactories) {
 		factory.Unload();
 	}

@@ -104,6 +104,8 @@ void Factory::Update()
 		popUp.time += GetFrameTime();
 		popUp.position.x += popUp.speedX * GetFrameTime();
 		popUp.position.y -= popUp.speedY * GetFrameTime();
+		popUp.alpha -= 8 * popUp.time;
+		popUp.alpha = (popUp.alpha < 0) ? 0 : popUp.alpha;
 		if (popUp.time > 1.2) {
 			mPopUpText.erase(begin(mPopUpText));
 		}
@@ -152,7 +154,7 @@ void Factory::Draw()
 	DrawTextureEx(mBossHandTexture, mHandPos, 0, 4, WHITE);
 	mBossBtn.Draw();
 	for (PopUp& popUp : mPopUpText) {
-		DrawText(popUp.text.c_str(), popUp.position.x, popUp.position.y, 20, WHITE);
+		DrawText(popUp.text.c_str(), popUp.position.x, popUp.position.y, 30, Color{255, 255, 255, (unsigned char)popUp.alpha});
 	}
 }
 
@@ -165,6 +167,7 @@ void Factory::DrawButtons()
 		upgradeButton.Draw();
 	}
 	mFactoryUpgradeBtn.Draw();
+	DrawText(TextFormat("%i", mMaxProductOnTables), 168 - MeasureText(TextFormat("%i", mMaxProductOnTables), 40) / 2, 345, 40, WHITE);
 }
 
 void Factory::Unload()
